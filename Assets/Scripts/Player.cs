@@ -2,6 +2,13 @@ using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+    public static Player Instance { get; private set; }
+
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs {
+        public ClearCounter selectedCounter;
+    }
+
     [SerializeField] private float moveSpeed = 7f;
 
     [SerializeField] private float rotateSpeed = 10f;
@@ -11,7 +18,17 @@ public class Player : MonoBehaviour {
     [SerializeField] private LayerMask countersLayerMask;
 
     private bool isWalking;
+
     private Vector3 lastInteractionDir;
+
+    private ClearCounter selectedCounter;
+
+    private void Awake() {
+        if (Instance != null) {
+            Debug.LogError("There is more than one Player instance");
+        }
+        Instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start() {
@@ -19,21 +36,8 @@ public class Player : MonoBehaviour {
     }
 
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
-        var inputVector = gameInput.GetMovementVectorNormalized();
-
-        var moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
-        var interactDistance = 2f;
-
-        // make sure raycast can hit the facing direction even when not moving
-        if (IsWalking()) {
-            lastInteractionDir = moveDir;
-        }
-
-        if (Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactDistance, countersLayerMask)) {
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
-                clearCounter.Interact();
-            }
+        if(selectedCounter != null) {
+            selectedCounter.Interact();
         }
     }
 
@@ -88,6 +92,7 @@ public class Player : MonoBehaviour {
         isWalking = moveDir != Vector3.zero;
     }
 
+    // Detects if the player is facing a counter and sets the selected counter accordingly
     private void HandleInteractions() {
         var inputVector = gameInput.GetMovementVectorNormalized();
 
@@ -100,10 +105,26 @@ public class Player : MonoBehaviour {
             lastInteractionDir = moveDir;
         }
 
-        if(Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactDistance, countersLayerMask)) {
-            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
-                
+        if (Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactDistance, countersLayerMask)) {
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
+                if (clearCounter != selectedCounter) {
+                    SetSelectedCounter(clearCounter);
+                }
+            }
+            else {
+                SetSelectedCounter(null);
             }
         }
+        else {
+            SetSelectedCounter(null);
+        }
+    }
+
+    private void SetSelectedCounter(ClearCounter selectedCounter) {
+        this.selectedCounter = selectedCounter;
+
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
+            selectedCounter = selectedCounter
+        });
     }
 }

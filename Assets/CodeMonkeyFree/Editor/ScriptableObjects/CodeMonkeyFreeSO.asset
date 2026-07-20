@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1783761348
+  lastShownTimestamp: 1783933330
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1783761348
+  checkedLastUpdateTimestamp: 1783933330
   lastQOTDResponse:
-    questionId: 320
-    questionText: Can Color ever be null?
-    answerA: Yes, always
+    questionId: 321
+    questionText: When you create a new script, do you always have to extend MonoBehaviour?
+    answerA: Yes
     answerB: No
-    answerC: Yes, as Nullable
+    answerC: Only if you want to use it as a Game Object Component
     answerD: 
     answerE: 
-  lastQotdTimestamp: 1783761348
+  lastQotdTimestamp: 1783933330
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/summer2025CodeMonkeyBundle.png
     topText: Get 80% OFF on ALL my Courses and Games!!!
@@ -35,11 +35,11 @@ MonoBehaviour:
     bottomText: DONT MISS the latest important trends, sign up for my FREE Weekly
       Newsletter!
     bottomLink: gamedevreport
-  lastDynamicHeaderTimestamp: 1783761348
+  lastDynamicHeaderTimestamp: 1783933330
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1783761348
+  websiteLatestMessageTimestamp: 1783933330
   websiteLatestVideos:
     videos:
     - youTubeId: zkKU7Vj5Syc
@@ -50,4 +50,4 @@ MonoBehaviour:
       title: Apparently Indie devs are NOT dead?
     - youTubeId: C9iHZDlnXdk
       title: BEST NEW Visual Assets to INSPIRE YOU! (APRIL 2026)
-  websiteLatestVideosTimestamp: 1783761348
+  websiteLatestVideosTimestamp: 1783933330
