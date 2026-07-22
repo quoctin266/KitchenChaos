@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &264427905 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2878131861819120185, guid: 0a5a9ca86b1268d4ba359f3733af742d, type: 3}
+  m_PrefabInstance: {fileID: 903490727533863481}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +755,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearCounter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1769486807102425401, guid: 0a5a9ca86b1268d4ba359f3733af742d, type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: c86bf0e64795fa24c92e6d8c8709c701, type: 2}
     - target: {fileID: 2844397976151189535, guid: 0a5a9ca86b1268d4ba359f3733af742d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.59
@@ -994,6 +1003,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 1769486807102425401, guid: 0a5a9ca86b1268d4ba359f3733af742d, type: 3}
+      propertyPath: counterTopPoint
+      value: 
+      objectReference: {fileID: 264427905}
+    - target: {fileID: 1769486807102425401, guid: 0a5a9ca86b1268d4ba359f3733af742d, type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b69438a4af57b4bb4666499ff059b6, type: 2}
     - target: {fileID: 2844397976151189535, guid: 0a5a9ca86b1268d4ba359f3733af742d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
