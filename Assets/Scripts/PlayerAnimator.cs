@@ -12,7 +12,6 @@ public class PlayerAnimator : MonoBehaviour {
         
     }
 
-    // Update is called once per frame
     private void Awake() {
         animator = GetComponent<Animator>();
     }

@@ -3,7 +3,7 @@ using static Player;
 
 public class SelectedCounterVisual : MonoBehaviour
 {
-    [SerializeField] private GameObject visualGameObject;
+    [SerializeField] private GameObject[] visualGameObjectArr;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -12,13 +12,18 @@ public class SelectedCounterVisual : MonoBehaviour
     }
 
     private void Player_OnSelectedCounterChanged(object sender, OnSelectedCounterChangedEventArgs e) {
-        var clearCounter = GetComponentInParent<ClearCounter>();
+        var baseCounter = GetComponentInParent<BaseCounter>();
 
-        if (clearCounter == e.selectedCounter) {
-            visualGameObject.SetActive(true);
+        // show/hide visual 
+        if (baseCounter == e.selectedCounter) {
+            foreach (var visualGameObject in visualGameObjectArr) {
+                visualGameObject.SetActive(true);
+            }
         }
         else {
-            visualGameObject.SetActive(false);
+            foreach (var visualGameObject in visualGameObjectArr) {
+                visualGameObject.SetActive(false);
+            }
         }
     }
 
