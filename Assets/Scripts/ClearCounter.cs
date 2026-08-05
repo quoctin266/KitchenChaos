@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ClearCounter : BaseCounter
 {
-    [SerializeField] private KitchenObjectSO kitchenObjectSO;
-
     public override void Interact(Player player) {
         // Player drop object on counter
         if (player.GetKitchenObject() != null && GetKitchenObject() == null) {
@@ -13,6 +11,5 @@ public class ClearCounter : BaseCounter
         else if (player.GetKitchenObject() == null && GetKitchenObject() != null) {
             GetKitchenObject().SetKitchenObjectParent(player);
         }
-        
     }
 }
