@@ -7,13 +7,7 @@ public class CuttingCounter : BaseCounter
 {
     [SerializeField] private List<CuttingRecipeSO> cuttingRecipes;
 
-    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
-
     public event EventHandler OnCut;
-
-    public class OnProgressChangedEventArgs : EventArgs {
-        public float progressNormalized;
-    }
 
     private int cuttingProgress;
 
@@ -28,14 +22,14 @@ public class CuttingCounter : BaseCounter
                 kitchenObject.SetKitchenObjectParent(this);
 
                 cuttingProgress = 0;
-
-                OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs { progressNormalized = 0f });
             }
         }
         // Player pick up object from counter
         else if (player.GetKitchenObject() == null && GetKitchenObject() != null) {
             GetKitchenObject().SetKitchenObjectParent(player);
         }
+
+        RaiseProgressChanged(0f);
     }
 
     public override void InteractAlternate(Player player) {
@@ -46,7 +40,7 @@ public class CuttingCounter : BaseCounter
             if (recipe != null) {
                 cuttingProgress++;
 
-                OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs { progressNormalized = (float)cuttingProgress / recipe.cuttingProgressMax });
+                RaiseProgressChanged((float)cuttingProgress / recipe.cuttingProgressMax);
 
                 OnCut?.Invoke(this, EventArgs.Empty);
 

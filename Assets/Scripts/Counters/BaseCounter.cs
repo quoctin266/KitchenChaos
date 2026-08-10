@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BaseCounter : MonoBehaviour, IKitchenObjectParent
@@ -6,12 +7,24 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 
     private KitchenObject kitchenObject;
 
+    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
+
+    public class OnProgressChangedEventArgs : EventArgs {
+        public float progressNormalized;
+    }
+
     public virtual void Interact(Player player) {
         Debug.LogError("BaseCounter.Interact() is not implemented");
     }
 
     public virtual void InteractAlternate(Player player) {
         Debug.LogError("BaseCounter.InteractAlternate() is not implemented");
+    }
+
+    protected void RaiseProgressChanged(float progress) {
+        OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs {
+            progressNormalized = progress
+        });
     }
 
     public Transform GetKitchenObjectLocation() {

@@ -40,6 +40,8 @@ public class StoveCounter : BaseCounter
                     if (fryingRecipe != null) {
                         fryingTimer += Time.deltaTime;
 
+                        RaiseProgressChanged(fryingTimer / fryingRecipe.fryingTimerMax);
+
                         if (fryingTimer >= fryingRecipe.fryingTimerMax) {
                             kitchenObject.DestroySelf();
 
@@ -58,12 +60,16 @@ public class StoveCounter : BaseCounter
                             fryingTimer = 0f;
 
                             OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
+
+                            RaiseProgressChanged(0f);
                         }
                     }
                     break;
                 case State.Fried:
                     if (fryingRecipe != null) {
                         fryingTimer += Time.deltaTime;
+
+                        RaiseProgressChanged(fryingTimer / fryingRecipe.fryingTimerMax);
 
                         if (fryingTimer >= fryingRecipe.fryingTimerMax) {
                             kitchenObject.DestroySelf();
@@ -75,6 +81,8 @@ public class StoveCounter : BaseCounter
                             fryingTimer = 0f;
 
                             OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
+
+                            RaiseProgressChanged(0f);
                         }
                     }
                     break;
@@ -113,6 +121,8 @@ public class StoveCounter : BaseCounter
 
             OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
         }
+
+        RaiseProgressChanged(0f);
     }
 
     public override void InteractAlternate(Player player) {
