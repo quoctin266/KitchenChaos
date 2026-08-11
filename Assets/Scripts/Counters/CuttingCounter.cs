@@ -12,16 +12,24 @@ public class CuttingCounter : BaseCounter
     private int cuttingProgress;
 
     public override void Interact(Player player) {
-        // Player drop object on counter
-        if (player.GetKitchenObject() != null && GetKitchenObject() == null) {
-            var kitchenObject = player.GetKitchenObject();
-            var recipe = cuttingRecipes.FirstOrDefault(x => x.input == kitchenObject.GetKitchenObjectSO());
+        if (player.GetKitchenObject() != null) {
+            // Player drop object on counter
+            if (GetKitchenObject() == null) {
+                var kitchenObject = player.GetKitchenObject();
+                var recipe = cuttingRecipes.FirstOrDefault(x => x.input == kitchenObject.GetKitchenObjectSO());
 
-            // If the object can be cut, place it on the counter
-            if (recipe != null) {
-                kitchenObject.SetKitchenObjectParent(this);
+                // If the object can be cut, place it on the counter
+                if (recipe != null) {
+                    kitchenObject.SetKitchenObjectParent(this);
 
-                cuttingProgress = 0;
+                    cuttingProgress = 0;
+                }
+            }
+            // Player carry a plate and place an ingredient on it
+            else if (player.GetKitchenObject() is PlateKitchenObject plateKitchenObject) {
+                if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO())) {
+                    GetKitchenObject().DestroySelf();
+                }
             }
         }
         // Player pick up object from counter

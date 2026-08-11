@@ -95,22 +95,30 @@ public class StoveCounter : BaseCounter
     }
 
     public override void Interact(Player player) {
-        // Player drop object on counter
-        if (player.GetKitchenObject() != null && GetKitchenObject() == null) {
-            var kitchenObject = player.GetKitchenObject();
-            var recipe = fryingRecipes.FirstOrDefault(x => x.input == kitchenObject.GetKitchenObjectSO());
+        if (player.GetKitchenObject() != null) {
+            // Player drop object on counter
+            if (GetKitchenObject() == null) {
+                var kitchenObject = player.GetKitchenObject();
+                var recipe = fryingRecipes.FirstOrDefault(x => x.input == kitchenObject.GetKitchenObjectSO());
 
-            // If the object can be fried, place it on the counter
-            if (recipe != null) {
-                fryingRecipe = recipe;
+                // If the object can be fried, place it on the counter
+                if (recipe != null) {
+                    fryingRecipe = recipe;
 
-                kitchenObject.SetKitchenObjectParent(this);
+                    kitchenObject.SetKitchenObjectParent(this);
 
-                fryingTimer = 0f;
+                    fryingTimer = 0f;
 
-                state = State.Frying;
+                    state = State.Frying;
+                }
+            }
+            // Player carry a plate and place an ingredient on it
+            else if (player.GetKitchenObject() is PlateKitchenObject plateKitchenObject) {
+                if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO())) {
+                    GetKitchenObject().DestroySelf();
 
-                OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
+                    state = State.Idle;
+                }
             }
         }
         // Player pick up object from counter
@@ -118,9 +126,9 @@ public class StoveCounter : BaseCounter
             GetKitchenObject().SetKitchenObjectParent(player);
 
             state = State.Idle;
-
-            OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
         }
+
+        OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
 
         RaiseProgressChanged(0f);
     }
