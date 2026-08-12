@@ -18,7 +18,7 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     }
 
     public virtual void InteractAlternate(Player player) {
-        Debug.LogError("BaseCounter.InteractAlternate() is not implemented");
+        Debug.Log("BaseCounter.InteractAlternate() is not implemented");
     }
 
     protected void RaiseProgressChanged(float progress) {
