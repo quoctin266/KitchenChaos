@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1786695567
+  lastShownTimestamp: 1786782004
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1786695567
+  checkedLastUpdateTimestamp: 1786782005
   lastQOTDResponse:
     questionId: 332
     questionText: Which of these are affected when you modify Time.timeScale?
@@ -29,7 +29,7 @@ MonoBehaviour:
     answerC: Time.deltaTime, Time.timeSinceLevelLoad, Time.fixedTime
     answerD: 
     answerE: 
-  lastQotdTimestamp: 1786695567
+  lastQotdTimestamp: 1786782005
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/summer2025CodeMonkeyBundle_EndsSoon.png
     topText: Get 80% OFF on ALL my Courses and Games!!! (ENDS AUGUST)
@@ -37,11 +37,11 @@ MonoBehaviour:
     bottomText: DONT MISS the latest important trends, sign up for my FREE Weekly
       Newsletter!
     bottomLink: gamedevreport
-  lastDynamicHeaderTimestamp: 1786695567
+  lastDynamicHeaderTimestamp: 1786782005
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1786695567
+  websiteLatestMessageTimestamp: 1786782005
   websiteLatestVideos:
     videos:
     - youTubeId: Hwpbh2fDPlE
@@ -52,4 +52,4 @@ MonoBehaviour:
       title: WHY this game made $10,000,000!
     - youTubeId: 2oHitHMNyNw
       title: WHY Scope Creep DESTROYS Indie Games (and how to stop it)
-  websiteLatestVideosTimestamp: 1786695567
+  websiteLatestVideosTimestamp: 1786782005

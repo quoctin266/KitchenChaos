@@ -4,10 +4,15 @@ public class DeliveryCounter : BaseCounter
 {
     public override void Interact(Player player) {
         if (player.GetKitchenObject() != null) {
-            // Player drop object on counter
-            if (GetKitchenObject() == null) {
-                player.GetKitchenObject().SetKitchenObjectParent(this);
+            // Player drop plate on counter
+            if (player.GetKitchenObject() is PlateKitchenObject plateKitchenObject) {
+                var deliverSuccess = DeliveryManager.Instance.DeliverRecipe(plateKitchenObject);
+
+                if(deliverSuccess) {
+                    player.GetKitchenObject().DestroySelf();
+                }
             }
+
             // Player carry a plate and place an ingredient on it
             //else if (player.GetKitchenObject() is PlateKitchenObject plateKitchenObjectOnPlayer) {
             //    if (plateKitchenObjectOnPlayer.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO())) {
