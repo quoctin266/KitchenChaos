@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,18 @@ public class DeliveryManager : MonoBehaviour
     private int waitingRecipesMax = 4;
 
     public static DeliveryManager Instance { get; private set; }
+
+    public event EventHandler<OnRecipeSpawnedEventArgs> OnRecipeSpawned;
+
+    public event EventHandler<OnRecipeCompletedEventArgs> OnRecipeCompleted;
+
+    public class OnRecipeSpawnedEventArgs : EventArgs {
+        public RecipeSO recipeSO;
+    }
+
+    public class OnRecipeCompletedEventArgs : EventArgs {
+        public RecipeSO recipeSO;
+    }
 
     private void Awake() {
         if (Instance != null) {
@@ -34,8 +47,10 @@ public class DeliveryManager : MonoBehaviour
                 spawnRecipeTimer = 0f;
 
                 var recipes = recipeListSO.recipes;
-                var randomRecipe = recipes[Random.Range(0, recipes.Count)];
+                var randomRecipe = recipes[UnityEngine.Random.Range(0, recipes.Count)];
                 waitingRecipes.Add(randomRecipe);
+
+                OnRecipeSpawned?.Invoke(this, new OnRecipeSpawnedEventArgs { recipeSO = randomRecipe });
             }
         }
     }
@@ -52,7 +67,7 @@ public class DeliveryManager : MonoBehaviour
                 if (recipeIngredients.TrueForAll(x => deliverIngredients.Contains(x))) {
                     waitingRecipes.Remove(recipe);
 
-                    Debug.Log(recipe.recipeName);
+                    OnRecipeCompleted?.Invoke(this, new OnRecipeCompletedEventArgs { recipeSO = recipe });
 
                     return true;
                 }
@@ -60,5 +75,9 @@ public class DeliveryManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public List<RecipeSO> GetWaitingRecipes() {
+        return waitingRecipes;
     }
 }
