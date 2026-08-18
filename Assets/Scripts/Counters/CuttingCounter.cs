@@ -9,6 +9,8 @@ public class CuttingCounter : BaseCounter
 
     public event EventHandler OnCut;
 
+    public static event EventHandler OnAnyCut;
+
     private int cuttingProgress;
 
     public override void Interact(Player player) {
@@ -43,6 +45,7 @@ public class CuttingCounter : BaseCounter
     public override void InteractAlternate(Player player) {
         var kitchenObject = GetKitchenObject();
         if (kitchenObject != null) {
+            // Check if the object can be cut
             var recipe = cuttingRecipes.FirstOrDefault(x => x.input == kitchenObject.GetKitchenObjectSO());
 
             if (recipe != null) {
@@ -51,6 +54,8 @@ public class CuttingCounter : BaseCounter
                 RaiseProgressChanged((float)cuttingProgress / recipe.cuttingProgressMax);
 
                 OnCut?.Invoke(this, EventArgs.Empty);
+
+                OnAnyCut?.Invoke(this, EventArgs.Empty);
 
                 if (cuttingProgress >= recipe.cuttingProgressMax) {
                     kitchenObject.DestroySelf();

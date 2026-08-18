@@ -13,6 +13,8 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
         public float progressNormalized;
     }
 
+    public static event EventHandler OnAnyObjectPlaced;
+
     public virtual void Interact(Player player) {
         Debug.LogError("BaseCounter.Interact() is not implemented");
     }
@@ -33,6 +35,10 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 
     public void SetKitchenObject(KitchenObject kitchenObject) {
         this.kitchenObject = kitchenObject;
+
+        if(kitchenObject != null) {
+            OnAnyObjectPlaced?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject() {

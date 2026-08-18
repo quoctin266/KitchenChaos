@@ -28,6 +28,10 @@ public class DeliveryManager : MonoBehaviour
         public RecipeSO recipeSO;
     }
 
+    public event EventHandler OnDeliverSuccess;
+
+    public event EventHandler OnDeliverFailed;
+
     private void Awake() {
         if (Instance != null) {
             Debug.LogError("There is more than one delivery manager instance");
@@ -69,10 +73,14 @@ public class DeliveryManager : MonoBehaviour
 
                     OnRecipeCompleted?.Invoke(this, new OnRecipeCompletedEventArgs { recipeSO = recipe });
 
+                    OnDeliverSuccess?.Invoke(this, EventArgs.Empty);
+
                     return true;
                 }
             }
         }
+
+        OnDeliverFailed?.Invoke(this, EventArgs.Empty);
 
         return false;
     }

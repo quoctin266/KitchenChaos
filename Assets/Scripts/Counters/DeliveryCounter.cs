@@ -2,6 +2,16 @@ using UnityEngine;
 
 public class DeliveryCounter : BaseCounter
 {
+    public static DeliveryCounter Instance { get; private set; }
+
+    private void Awake() {
+        if (Instance != null) {
+            Debug.LogError("There is more than one delivery counter instance");
+        }
+
+        Instance = this;
+    }
+
     public override void Interact(Player player) {
         if (player.GetKitchenObject() != null) {
             // Player drop plate on counter
@@ -12,19 +22,6 @@ public class DeliveryCounter : BaseCounter
                     player.GetKitchenObject().DestroySelf();
                 }
             }
-
-            // Player carry a plate and place an ingredient on it
-            //else if (player.GetKitchenObject() is PlateKitchenObject plateKitchenObjectOnPlayer) {
-            //    if (plateKitchenObjectOnPlayer.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO())) {
-            //        GetKitchenObject().DestroySelf();
-            //    }
-            //}
-            // Counter has a plate and player place an ingredient on it
-            //else if (GetKitchenObject() is PlateKitchenObject plateKitchenObjectOnCounter) {
-            //    if (plateKitchenObjectOnCounter.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO())) {
-            //        player.GetKitchenObject().DestroySelf();
-            //    }
-            //}
         }
     }
 }
