@@ -14,6 +14,8 @@ public class DeliveryManager : MonoBehaviour
 
     private int waitingRecipesMax = 4;
 
+    private int successfulRecipesAmount;
+
     public static DeliveryManager Instance { get; private set; }
 
     public event EventHandler<OnRecipeSpawnedEventArgs> OnRecipeSpawned;
@@ -54,6 +56,7 @@ public class DeliveryManager : MonoBehaviour
                 var randomRecipe = recipes[UnityEngine.Random.Range(0, recipes.Count)];
                 waitingRecipes.Add(randomRecipe);
 
+                // Spawn recipe on UI
                 OnRecipeSpawned?.Invoke(this, new OnRecipeSpawnedEventArgs { recipeSO = randomRecipe });
             }
         }
@@ -71,8 +74,12 @@ public class DeliveryManager : MonoBehaviour
                 if (recipeIngredients.TrueForAll(x => deliverIngredients.Contains(x))) {
                     waitingRecipes.Remove(recipe);
 
+                    successfulRecipesAmount++;
+
+                    // Remove delivered recipe on UI
                     OnRecipeCompleted?.Invoke(this, new OnRecipeCompletedEventArgs { recipeSO = recipe });
 
+                    // Play sound effect
                     OnDeliverSuccess?.Invoke(this, EventArgs.Empty);
 
                     return true;
@@ -80,6 +87,7 @@ public class DeliveryManager : MonoBehaviour
             }
         }
 
+        // Play sound effect
         OnDeliverFailed?.Invoke(this, EventArgs.Empty);
 
         return false;
@@ -87,5 +95,9 @@ public class DeliveryManager : MonoBehaviour
 
     public List<RecipeSO> GetWaitingRecipes() {
         return waitingRecipes;
+    }
+
+    public int GetSuccessfulRecipesAmount() {
+        return successfulRecipesAmount;
     }
 }
